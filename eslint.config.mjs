@@ -1,16 +1,39 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+// eslint.config.mjs
+import { next } from '@next/eslint-plugin-next';
+import prettier from 'eslint-plugin-prettier';
+import eslintRecommended from '@eslint/js';
+import js from '@eslint/js';
+import prettierPlugin from 'eslint-plugin-prettier';
+import nextPlugin from '@next/eslint-plugin-next';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default eslintConfig = [
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 12,
+      sourceType: 'module',
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+      },
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      prettier,
+    },
+    rules: {
+      ...eslintRecommended.configs.recommended.rules,
+      ...next.configs.recommended.rules,
+      ...js.configs.recommended.rules,
+      ...nextPlugin.configs.recommended.rules,
+      ...prettierPlugin.configs.recommended.rules,
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'react/react-in-jsx-scope': 'off', // Not needed for Next.js
+    },
+  },
 ];
-
-export default eslintConfig;

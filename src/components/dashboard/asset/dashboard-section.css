@@ -1,0 +1,10 @@
+.dashboard-section .dashboard-content {
+  min-height: calc(100vh - 160px);
+}
+.dashboard-section .ant-menu-item .sider-item {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: var(--regular-description-size);
+}
+.dashboard-section .ant-menu-item-selected .sider-item {
+  color: #fff;
+}

@@ -1,0 +1,53 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login-page .login-section-row {
+  width: 50%;
+}
+.login-page .login-card {
+  box-shadow: 0 14px 38px 3px rgba(0, 0, 0, 0.14);
+}
+.login-page .login-card h1 {
+  font-size: var(--heading-size);
+  font-family: var(--font-bayon) !important;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login-page .login-card h4 {
+  font-family: var(--font-roboto), sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+.login-page .login-card .login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-page .login-card .login-form .label-input {
+  width: 100%;
+}
+.login-page .login-card .login-form .label-input label {
+  width: 150px;
+  text-align: end;
+  display: block;
+  font-family: var(--font-weather);
+  font-size: var(--regular-description-size);
+}
+
+.login-page .login-card .login-form Button {
+  width: 200px;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--content-radius);
+  height: 50px;
+  background: var(--primary-color);
+  color: #fff;
+}
+.login-page .login-card .login-form Button:hover {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}

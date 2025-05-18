@@ -1,0 +1,36 @@
+.ant-form-item-explain-error {
+  font-size: 12px;
+}
+.ant-input-data-count {
+  bottom: -30px !important;
+  font-size: 12px;
+}
+
+.project-submit-button {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid var(--button-color);
+  /* border-radius: var(--content-radius); */
+  height: 40px;
+  background: var(--button-color);
+}
+.project-submit-button span {
+  font-size: 18px !important;
+}
+.project-submit-button:hover {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background: #fff;
+}
+.edit-project-container {
+  margin-top: 20px !important;
+}
+.project-upload .create-project-button span,
+.project-container .ant-upload-list-item-name {
+  font-size: 12px;
+}
+
+.project-form .preview-image {
+  display: flex;
+  gap: 15px;
+}

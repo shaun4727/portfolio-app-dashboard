@@ -1,0 +1,16 @@
+.homepage-hero-container .home-submit-button,
+.homepage-skill-container .skill-submit-button {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid var(--button-color);
+  /* border-radius: var(--content-radius); */
+  height: 40px;
+  background: var(--button-color);
+}
+.homepage-skill-container .skill-submit-button span {
+  font-size: 18px !important;
+}
+
+.homepage-skill-container .create-skill-button span {
+  font-size: 14px !important;
+}
