@@ -27,14 +27,14 @@
   font-size: 14px;
 }
 
-.blog-page-container .heading-note {
+.heading-note {
   background: #ffd8d8;
   padding: 25px;
   border: 1px solid red;
   border-radius: 15px;
   margin-bottom: 15px;
 }
-.blog-page-container .heading-note h1 {
+.heading-note h1 {
   color: red;
   font-weight: 400;
   text-align: center;

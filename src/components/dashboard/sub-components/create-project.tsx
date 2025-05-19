@@ -122,11 +122,6 @@ export default function ProjectCreate({
     maxCount: 1,
     onChange(info) {
       if (info.file.status === 'done') {
-        // if (currProject?.thumbnail) {
-        //   // Clear the file list if existing project has thumbnail
-        //   setFileList([]);
-        //   return;
-        // }
         message.success(`${info.file.name} uploaded successfully`);
         // setFileList(info.fileList);
       } else if (info.file.status === 'error') {

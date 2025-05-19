@@ -18,14 +18,21 @@ import { MessageType } from '@/types';
 import ProjectSection from './sub-components/projects-content';
 import { logout } from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
-import HeroSection from './sub-components/hero-section';
-import SkillSection from './sub-components/skill-section';
 import BlogSection from './sub-components/blog-section';
 import WorkExperienceSection from './sub-components/work-experience-section';
+import HeroSectionContent from './sub-components/hero-section-content';
+import { HeroSectionDataType, SkillType } from '@/types/home-page';
+import SkillSectionContent from './sub-components/skill-section-content';
 
 const { Header, Sider, Content } = Layout;
 
-export default function DashboardSection() {
+export default function DashboardSection({
+  heroData,
+  skillData,
+}: {
+  heroData: HeroSectionDataType[];
+  skillData: SkillType[];
+}) {
   const [collapsed, setCollapsed] = useState(false);
   const [currentTab, setCurrentTab] = useState<number>(1);
   const [allMessages, setAllMessages] = useState<MessageType[]>([]);
@@ -146,8 +153,8 @@ export default function DashboardSection() {
         >
           {currentTab === 1 && <MessageSection setLoading={setLoading} />}
           {currentTab === 2 && <ProjectSection />}
-          {currentTab === 31 && <HeroSection />}
-          {currentTab === 32 && <SkillSection />}
+          {currentTab === 31 && <HeroSectionContent heroData={heroData} />}
+          {currentTab === 32 && <SkillSectionContent skillData={skillData} />}
           {currentTab === 33 && <WorkExperienceSection />}
           {currentTab === 4 && <BlogSection />}
         </Content>

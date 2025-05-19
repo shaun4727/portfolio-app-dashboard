@@ -20,6 +20,9 @@ import React from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
 import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
+import { TFile } from '@/types';
+import { createSkillItemServices } from '@/services/HomeServices';
+import { SkillType } from '@/types/home-page';
 
 const { TextArea } = Input;
 
@@ -29,8 +32,35 @@ export default function SkillSection() {
 
   const onFinish: FormProps<any>['onFinish'] = async (values) => {
     try {
-      //   toastId = toast.loading('...Loading', { id: toastId });
-      console.log('skill section info', values);
+      toastId = toast.loading('...Loading', { id: toastId });
+
+      const { skill_icon = [], ...rest } = values;
+
+      const formData = new FormData();
+
+      skill_icon.forEach((file: TFile) => {
+        if (file.originFileObj instanceof Blob) {
+          formData.append('skill_icon', file.originFileObj);
+        }
+      });
+
+      const formObj = {
+        ...rest,
+      };
+
+      formData.append('data', JSON.stringify(formObj));
+
+      const res = await createSkillItemServices(formData);
+      console.log(res);
+      if (res?.success) {
+        // await revalidateHeroes();
+        // setCurrHero(null);
+        form.resetFields();
+
+        toast.success(res?.message, { id: toastId });
+      } else {
+        toast.error(res?.message, { id: toastId });
+      }
     } catch (err) {
       toast.error(err as string, { id: toastId });
     }
@@ -91,109 +121,65 @@ export default function SkillSection() {
             }}
           >
             <Form
-              className="project-form"
+              className="skill-form"
               name="basic"
               form={form}
               layout="vertical"
               onFinish={onFinish}
               autoComplete="off"
             >
-              <Form.List name="items">
-                {(fields, { add, remove }) => (
-                  <div
-                    style={{
-                      display: 'flex',
-                      rowGap: 16,
-                      flexDirection: 'column',
-                    }}
+              <Form.Item<SkillType>
+                label="Technology Name"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter skill name',
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item<SkillType>
+                label="Skill description"
+                name="description"
+                className="label-input"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter skill description',
+                  },
+                ]}
+              >
+                <TextArea
+                  showCount
+                  placeholder="Enter skill description"
+                  style={{ height: 120, resize: 'none' }}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Skill Icon"
+                name="skill_icon"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                className="label-input"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Upload skill icon!',
+                  },
+                ]}
+              >
+                <Upload className="skill-upload" {...thumbnailProps}>
+                  <Button
+                    style={{ fontSize: '14px' }}
+                    className="create-skill-button"
+                    icon={<UploadOutlined />}
                   >
-                    {fields.map((field) => (
-                      <Card
-                        size="small"
-                        title={`Technology detail ${field.name + 1}`}
-                        key={field.key}
-                        extra={
-                          <CloseOutlined
-                            onClick={() => {
-                              remove(field.name);
-                            }}
-                          />
-                        }
-                      >
-                        <Form.Item
-                          label="Technology Name"
-                          name={[field.name, 'name']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter skill name',
-                            },
-                          ]}
-                        >
-                          <Input />
-                        </Form.Item>
-
-                        <Form.Item<any>
-                          label="Skill description"
-                          name={[field.name, 'description']}
-                          className="label-input"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter skill description',
-                            },
-                          ]}
-                        >
-                          <TextArea
-                            showCount
-                            placeholder="Enter skill description"
-                            style={{ height: 120, resize: 'none' }}
-                          />
-                        </Form.Item>
-                        <Form.Item
-                          label="Skill Icon"
-                          name={[field.name, 'skill_icon']}
-                          valuePropName="fileList"
-                          getValueFromEvent={normFile}
-                          className="label-input"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Upload skill icon!',
-                            },
-                          ]}
-                        >
-                          <Upload className="skill-upload" {...thumbnailProps}>
-                            <Button
-                              style={{ fontSize: '14px' }}
-                              className="create-skill-button"
-                              icon={<UploadOutlined />}
-                            >
-                              Click to Upload (Max: 1)
-                            </Button>
-                          </Upload>
-                        </Form.Item>
-                      </Card>
-                    ))}
-
-                    <Flex justify="flex-end" align="center">
-                      {' '}
-                      <Button
-                        type="default"
-                        style={{
-                          color: '#034c53',
-                          border: 'none',
-                          width: '100px',
-                        }}
-                        onClick={() => add()}
-                        block
-                      >
-                        + Add Item
-                      </Button>
-                    </Flex>
-                  </div>
-                )}
-              </Form.List>
+                    Click to Upload (Max: 1)
+                  </Button>
+                </Upload>
+              </Form.Item>
 
               <Form.Item label={null}>
                 <Button className="skill-submit-button" htmlType="submit">
