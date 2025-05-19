@@ -17,6 +17,7 @@ import React from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
 import { UploadOutlined } from '@ant-design/icons';
+import { HeroSectionDataType } from '@/types/home-page';
 
 const { TextArea } = Input;
 
@@ -24,7 +25,9 @@ export default function HeroSection() {
   const [form] = Form.useForm();
   let toastId: string | number = 'hero-section';
 
-  const onFinish: FormProps<any>['onFinish'] = async (values) => {
+  const onFinish: FormProps<HeroSectionDataType>['onFinish'] = async (
+    values
+  ) => {
     try {
       toastId = toast.loading('...Loading', { id: toastId });
       console.log('hero section info', values);
@@ -88,7 +91,7 @@ export default function HeroSection() {
               onFinish={onFinish}
               autoComplete="off"
             >
-              <Form.Item<any>
+              <Form.Item<HeroSectionDataType>
                 label="Stack Type"
                 name="stack"
                 className="label-input"
@@ -112,7 +115,7 @@ export default function HeroSection() {
                   ]}
                 />
               </Form.Item>
-              <Form.Item<any>
+              <Form.Item<HeroSectionDataType>
                 label="Tag Line"
                 name="tagline"
                 className="label-input"
@@ -125,7 +128,7 @@ export default function HeroSection() {
               >
                 <Input placeholder="Enter your tagline" className="input" />
               </Form.Item>
-              <Form.Item<any>
+              <Form.Item<HeroSectionDataType>
                 label="About Me"
                 name="about_me"
                 className="label-input"
@@ -142,7 +145,7 @@ export default function HeroSection() {
                   style={{ height: 120, resize: 'none' }}
                 />
               </Form.Item>
-              <Form.Item<any>
+              <Form.Item<HeroSectionDataType>
                 label="Thumbnail"
                 name="thumbnail"
                 className="label-input"

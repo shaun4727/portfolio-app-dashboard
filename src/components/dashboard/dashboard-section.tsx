@@ -9,6 +9,7 @@ import {
   FundProjectionScreenOutlined,
   LogoutOutlined,
   HomeOutlined,
+  DiffOutlined,
 } from '@ant-design/icons';
 import { Badge, Button, Layout, Menu, MenuProps, theme } from 'antd';
 import MessageSection from './sub-components/message-contents';
@@ -19,6 +20,8 @@ import { logout } from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import HeroSection from './sub-components/hero-section';
 import SkillSection from './sub-components/skill-section';
+import BlogSection from './sub-components/blog-section';
+import WorkExperienceSection from './sub-components/work-experience-section';
 
 const { Header, Sider, Content } = Layout;
 
@@ -99,7 +102,16 @@ export default function DashboardSection() {
                   key: '32',
                   label: 'Skill Section',
                 },
+                {
+                  key: '33',
+                  label: 'Work Experience',
+                },
               ],
+            },
+            {
+              key: '4',
+              icon: <DiffOutlined />,
+              label: 'Add Blog',
             },
             {
               key: 'logout',
@@ -136,6 +148,8 @@ export default function DashboardSection() {
           {currentTab === 2 && <ProjectSection />}
           {currentTab === 31 && <HeroSection />}
           {currentTab === 32 && <SkillSection />}
+          {currentTab === 33 && <WorkExperienceSection />}
+          {currentTab === 4 && <BlogSection />}
         </Content>
       </Layout>
     </Layout>

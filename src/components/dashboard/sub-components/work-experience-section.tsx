@@ -3,8 +3,10 @@
 import {
   Button,
   Card,
+  Checkbox,
   Col,
   ConfigProvider,
+  DatePicker,
   Flex,
   Form,
   FormProps,
@@ -12,18 +14,14 @@ import {
   message,
   Row,
   Select,
-  Space,
-  Upload,
   UploadProps,
 } from 'antd';
 import React from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
-import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const { TextArea } = Input;
-
-export default function SkillSection() {
+export default function WorkExperienceSection() {
   const [form] = Form.useForm();
   let toastId: string | number = 'hero-section';
 
@@ -36,41 +34,9 @@ export default function SkillSection() {
     }
   };
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
-  const thumbnailProps: UploadProps = {
-    name: 'skill-icon-file',
-
-    beforeUpload: (file) => {
-      // Prevent upload if existing thumbnail
-      return true;
-    },
-    maxCount: 1,
-    onChange(info) {
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} upload failed`);
-      }
-    },
-    progress: {
-      strokeColor: {
-        '0%': '#108ee9',
-        '100%': '#87d068',
-      },
-      strokeWidth: 3,
-      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
-    },
-  };
-
   return (
     <>
-      <Row gutter={[16, 16]} className="homepage-skill-container">
+      <Row gutter={[16, 16]} className="homepage-experience-container">
         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="gutter-row">
           <ConfigProvider
             theme={{
@@ -84,8 +50,7 @@ export default function SkillSection() {
                   labelColor: '#000',
                 },
                 Select: {
-                  optionSelectedBg: '#fff',
-                  optionFontSize: 1,
+                  optionFontSize: 11,
                 },
               },
             }}
@@ -98,105 +63,168 @@ export default function SkillSection() {
               onFinish={onFinish}
               autoComplete="off"
             >
-              <Form.List name="items">
-                {(fields, { add, remove }) => (
-                  <div
-                    style={{
-                      display: 'flex',
-                      rowGap: 16,
-                      flexDirection: 'column',
-                    }}
-                  >
-                    {fields.map((field) => (
-                      <Card
-                        size="small"
-                        title={`Technology detail ${field.name + 1}`}
+              <Form.Item<any>
+                label="Company Name"
+                name="company_name"
+                className="label-input"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please write your Company name!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Enter your company name"
+                  className="company-name"
+                />
+              </Form.Item>
+              <Flex gap="middle">
+                <Form.Item<any>
+                  label="Start Date"
+                  name="start_date"
+                  className="label-input"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select start date!',
+                    },
+                  ]}
+                >
+                  <DatePicker />
+                </Form.Item>
+                <Form.Item<any>
+                  label="End Date"
+                  name="end_date"
+                  className="label-input"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select end date!',
+                    },
+                  ]}
+                >
+                  <DatePicker />
+                </Form.Item>
+              </Flex>
+              <Form.Item<any>
+                name="currently_working"
+                className="label-input"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please specify if you currently work here!',
+                  },
+                ]}
+              >
+                <Checkbox className="working-status">
+                  <span>Currently work here</span>
+                </Checkbox>
+              </Form.Item>
+              <Form.Item<any>
+                label="Designation"
+                name="designation"
+                className="label-input"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your designation!',
+                  },
+                ]}
+              >
+                <Select
+                  defaultValue="junior-developer"
+                  style={{
+                    width: '300px',
+                  }}
+                  size="middle"
+                  options={[
+                    {
+                      value: 'junior-developer',
+                      label: (
+                        <span className="designation">Junior Developer</span>
+                      ),
+                    },
+                    {
+                      value: 'developer',
+                      label: <span className="designation">Developer</span>,
+                    },
+                    {
+                      value: 'senior-developer',
+                      label: (
+                        <span className="designation">Senior Developer</span>
+                      ),
+                    },
+                  ]}
+                />
+              </Form.Item>
+              <Form.List name="names">
+                {(fields, { add, remove }, { errors }) => (
+                  <>
+                    {fields.map((field, index) => (
+                      <Form.Item
+                        label={index === 0 ? 'Responsibilities' : ''}
+                        required={false}
                         key={field.key}
-                        extra={
-                          <CloseOutlined
-                            onClick={() => {
-                              remove(field.name);
-                            }}
-                          />
-                        }
+                        style={{ width: '100%!important' }}
                       >
-                        <Form.Item
-                          label="Technology Name"
-                          name={[field.name, 'name']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter skill name',
-                            },
-                          ]}
+                        <Flex
+                          justify="flex-start"
+                          gap="middle"
+                          align="flex-start"
+                          style={{ height: '32px' }}
                         >
-                          <Input />
-                        </Form.Item>
-
-                        <Form.Item<any>
-                          label="Skill description"
-                          name={[field.name, 'description']}
-                          className="label-input"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter skill description',
-                            },
-                          ]}
-                        >
-                          <TextArea
-                            showCount
-                            placeholder="Enter skill description"
-                            style={{ height: 120, resize: 'none' }}
-                          />
-                        </Form.Item>
-                        <Form.Item
-                          label="Skill Icon"
-                          name={[field.name, 'skill_icon']}
-                          valuePropName="fileList"
-                          getValueFromEvent={normFile}
-                          className="label-input"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Upload skill icon!',
-                            },
-                          ]}
-                        >
-                          <Upload className="skill-upload" {...thumbnailProps}>
-                            <Button
-                              style={{ fontSize: '14px' }}
-                              className="create-skill-button"
-                              icon={<UploadOutlined />}
-                            >
-                              Click to Upload (Max: 1)
-                            </Button>
-                          </Upload>
-                        </Form.Item>
-                      </Card>
+                          <Form.Item
+                            {...field}
+                            style={{ width: '100%!important' }}
+                            validateTrigger={['onChange', 'onBlur']}
+                            rules={[
+                              {
+                                required: true,
+                                whitespace: true,
+                                message: 'Please input your responsibility',
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Write responsibility" />
+                          </Form.Item>
+                          {fields.length > 1 ? (
+                            <MinusCircleOutlined
+                              className="dynamic-delete-button"
+                              style={{ marginTop: '8px' }}
+                              onClick={() => remove(field.name)}
+                            />
+                          ) : null}
+                        </Flex>
+                      </Form.Item>
                     ))}
-
-                    <Flex justify="flex-end" align="center">
-                      {' '}
-                      <Button
-                        type="default"
-                        style={{
-                          color: '#034c53',
-                          border: 'none',
-                          width: '100px',
-                        }}
-                        onClick={() => add()}
-                        block
-                      >
-                        + Add Item
-                      </Button>
-                    </Flex>
-                  </div>
+                    <Form.Item>
+                      <Flex justify="flex-end" align="center">
+                        <Button
+                          type="default"
+                          onClick={() => add()}
+                          style={{
+                            color: '#034c53',
+                            border: 'none',
+                            width: '100px',
+                          }}
+                          icon={
+                            <PlusOutlined
+                              style={{ width: 'var(--label-font-size)' }}
+                            />
+                          }
+                        >
+                          <span className="add-field">Add field</span>
+                        </Button>
+                      </Flex>
+                      <Form.ErrorList errors={errors} />
+                    </Form.Item>
+                  </>
                 )}
               </Form.List>
 
               <Form.Item label={null}>
-                <Button className="skill-submit-button" htmlType="submit">
+                <Button className="experience-submit-button" htmlType="submit">
                   Submit
                 </Button>
               </Form.Item>

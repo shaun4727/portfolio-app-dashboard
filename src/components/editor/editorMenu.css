@@ -1,0 +1,66 @@
+/* MenuBar Container */
+.control-group {
+  display: flex;
+  justify-content: center;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Buttons */
+.button-group button {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.button-group button:hover {
+  background: #f0f0f0;
+}
+
+/* Active Button */
+.button-group button.is-active {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* Disabled Buttons */
+.button-group button:disabled {
+  background: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.menubar-divider {
+  width: 1px;
+  height: 24px;
+  background: #ccc;
+  margin: 0 8px;
+}
+
+/* Special Color Button */
+.button-group button.purple {
+  background: #958df1;
+  color: white;
+}
+
+.button-group button.purple:hover {
+  background: #7a6de8;
+}
