@@ -16,7 +16,6 @@ import {
   Select,
 } from 'antd';
 import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
@@ -32,9 +31,11 @@ import {
   getExperienceServices,
   updateExperienceDataServices,
 } from '@/services/HomeServices';
+import { useWatch } from 'antd/es/form/Form';
 
 export default function WorkExperienceSection() {
   const [form] = Form.useForm();
+  const currentlyWorking = useWatch('currently_working', form);
   let toastId: string | number = '1';
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<boolean>(false);
@@ -76,15 +77,15 @@ export default function WorkExperienceSection() {
     if (currExperience) {
       obj = {
         ...values,
-        end_date: values.end_date.format('YYYY-MM-DD'),
-        start_date: values.start_date.format('YYYY-MM-DD'),
+        end_date: values?.end_date?.format('YYYY-MM-DD'),
+        start_date: values?.start_date?.format('YYYY-MM-DD'),
         _id: currExperience._id,
       };
     } else {
       obj = {
         ...values,
-        end_date: values.end_date.format('YYYY-MM-DD'),
-        start_date: values.start_date.format('YYYY-MM-DD'),
+        end_date: values?.end_date?.format('YYYY-MM-DD'),
+        start_date: values?.start_date?.format('YYYY-MM-DD'),
       };
     }
 
@@ -96,16 +97,16 @@ export default function WorkExperienceSection() {
         res = await createExperienceServices(obj as ExperienceType);
       } else {
         res = await updateExperienceDataServices(obj as ExperienceType);
+        console.log('right section', res);
       }
 
       setSubmitStatus(false);
       if (res?.success) {
+        toast.success(res?.message, { id: toastId });
         await getAllExperiences();
         setCreateMode(false);
         setCurrExperience(null);
         form.resetFields();
-
-        toast.success(res?.message, { id: toastId });
       } else {
         toast.error(res?.message, { id: toastId });
       }
@@ -269,19 +270,21 @@ export default function WorkExperienceSection() {
                   >
                     <DatePicker />
                   </Form.Item>
-                  <Form.Item<ExperienceType>
-                    label="End Date"
-                    name="end_date"
-                    className="label-input"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please select end date!',
-                      },
-                    ]}
-                  >
-                    <DatePicker />
-                  </Form.Item>
+                  {!currentlyWorking && (
+                    <Form.Item<ExperienceType>
+                      label="End Date"
+                      name="end_date"
+                      className="label-input"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please select end date!',
+                        },
+                      ]}
+                    >
+                      <DatePicker />
+                    </Form.Item>
+                  )}
                 </Flex>
                 <Form.Item<ExperienceType>
                   name="currently_working"

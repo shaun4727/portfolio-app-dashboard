@@ -13,7 +13,7 @@ import {
   Upload,
   UploadProps,
 } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
 import { DeleteFilled, UploadOutlined } from '@ant-design/icons';
@@ -37,9 +37,10 @@ export default function SkillSection({
 }: updateSkillParams) {
   const [form] = Form.useForm();
   let toastId: string | number = 'hero-section';
+  const [shouldUpdateForm, setShouldUpdateForm] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currSkill) {
+    if (currSkill && shouldUpdateForm) {
       form.resetFields();
       form.setFieldsValue({
         name: currSkill.name,
@@ -82,6 +83,7 @@ export default function SkillSection({
       if (res?.success) {
         await revalidateSkills();
         setCurrSkill(null);
+        setShouldUpdateForm(true);
         form.resetFields();
 
         toast.success(res?.message, { id: toastId });
@@ -94,6 +96,7 @@ export default function SkillSection({
   };
 
   const deleteThumbnail = () => {
+    setShouldUpdateForm(false);
     setCurrSkill({ ...currSkill, skill_icon: '' } as SkillType);
   };
   const thumbnailProps: UploadProps = {

@@ -14,7 +14,7 @@ import {
   Image,
   UploadProps,
 } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
 import { DeleteFilled, UploadOutlined } from '@ant-design/icons';
@@ -40,9 +40,10 @@ export default function HeroSection({
 }: updateHeroParams) {
   const [form] = Form.useForm();
   let toastId: string | number = 'hero-section';
+  const [updateForm, setUpdateForm] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currHero) {
+    if (currHero && updateForm) {
       form.resetFields();
       form.setFieldsValue({
         stack: currHero.stack,
@@ -51,7 +52,7 @@ export default function HeroSection({
         about_me: currHero.about_me,
       });
     }
-  }, [currHero]);
+  }, [currHero, updateForm]);
 
   const onFinish: FormProps<HeroSectionDataType>['onFinish'] = async (
     values
@@ -87,6 +88,7 @@ export default function HeroSection({
       if (res?.success) {
         await revalidateHeroes();
         setCurrHero(null);
+        setUpdateForm(true);
         form.resetFields();
 
         toast.success(res?.message, { id: toastId });
@@ -99,6 +101,7 @@ export default function HeroSection({
   };
 
   const deleteThumbnail = () => {
+    setUpdateForm(false);
     setCurrHero({ ...currHero, thumbnail: '' } as HeroSectionDataType);
   };
 

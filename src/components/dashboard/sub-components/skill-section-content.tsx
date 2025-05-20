@@ -29,7 +29,7 @@ export default function SkillSectionContent({
     },
     {
       key: '2',
-      label: 'Hero Section List',
+      label: 'Skill Section List',
       children: (
         <SkillSectionList
           updateHeroFn={updateHeroFn}
