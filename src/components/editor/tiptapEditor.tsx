@@ -16,8 +16,6 @@ import './editorMenu.css';
 import '@/components/tiptap-node/image-upload-node/image-upload-node.scss';
 import { MenuBar } from './editorTools';
 
-const content = '<p>Try uploading an image or write here!</p>';
-
 export default function TipTapClient({
   onChange,
   value,
@@ -42,7 +40,7 @@ export default function TipTapClient({
         onError: (error) => console.error('Upload failed:', error),
       }),
     ],
-    content,
+    content: value,
     onUpdate({ editor }) {
       onChange(editor.getHTML());
     },

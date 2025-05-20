@@ -32,3 +32,10 @@ export type ExperienceType = {
   responsibilities: string[];
   _id: string;
 };
+
+export type BlogType = {
+  _id: string;
+  content: string;
+  excerpt: string;
+  question: string;
+};

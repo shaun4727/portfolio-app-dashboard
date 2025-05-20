@@ -1,7 +1,7 @@
 'use server';
 
 import { getValidToken } from '@/lib/verifyToken';
-import { ExperienceType } from '@/types/home-page';
+import { BlogType, ExperienceType } from '@/types/home-page';
 import { revalidateTag } from 'next/cache';
 
 export const createHeroSectionServices = async (data: FormData) => {
@@ -179,6 +179,69 @@ export const updateExperienceDataServices = async (data: ExperienceType) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/home/create-experience`,
+
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// blog services
+export const createBlogDataServices = async (data: BlogType) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/home/create-blog`,
+
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBlogDataServices = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/home/create-blog`,
+
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateBlogDataServices = async (data: BlogType) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/home/create-blog`,
 
       {
         method: 'PATCH',

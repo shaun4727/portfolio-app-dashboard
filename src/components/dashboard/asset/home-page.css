@@ -1,7 +1,7 @@
 .homepage-hero-container .home-submit-button,
 .homepage-skill-container .skill-submit-button,
 .homepage-experience-container .experience-submit-button,
-.blog-page-container .blog-submit-button {
+.blog-submit-button {
   width: 100%;
   margin-top: 10px;
   border: 1px solid var(--button-color);

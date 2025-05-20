@@ -9,6 +9,7 @@ export function MenuBar({ editor }: { editor: Editor }) {
         {/* Your existing buttons here (bold, italic, etc.) */}
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().setImageUploadNode().run()}
         >
           Upload Image
