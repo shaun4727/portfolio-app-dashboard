@@ -12,7 +12,7 @@ import { revalidateHeroes } from '@/services/HomeServices';
 interface SkillListParams {
   updateHeroFn: (tabNumber: string, skill: SkillType) => void;
   activeKey: string;
-  skillListData: [];
+  skillListData: SkillType[];
 }
 
 export default function SkillSectionList({

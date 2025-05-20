@@ -12,16 +12,20 @@ export default function SkillSectionContent({
   skillData: SkillType[];
 }) {
   const [activeTab, setActiveTab] = useState<string>('1');
+  const [currSkill, setCurrSkill] = useState<SkillType | null>(null);
 
-  const updateHeroFn = (tabNumber: string, hero: SkillType) => {
+  const updateHeroFn = (tabNumber: string, skill: SkillType) => {
     setActiveTab(tabNumber);
+    setCurrSkill(skill);
   };
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Skill Create',
-      children: <SkillSection />,
+      children: (
+        <SkillSection currSkill={currSkill} setCurrSkill={setCurrSkill} />
+      ),
     },
     {
       key: '2',

@@ -5,8 +5,8 @@ import {
 } from '@/services/HomeServices';
 
 export default async function Dashboard() {
-  const heroSectionData = (await getHeroDataListServices()).data;
-  const skillSectionData = (await getSkillDataListServices()).data;
+  const heroSectionData = (await getHeroDataListServices())?.data;
+  const skillSectionData = (await getSkillDataListServices())?.data;
   return (
     <div>
       <DashboardSection

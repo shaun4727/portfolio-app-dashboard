@@ -39,3 +39,78 @@
   font-weight: 400;
   text-align: center;
 }
+
+/* responsibility field */
+.responsibility-field {
+  width: 60vw !important;
+}
+.responsibility-field .responsibility-input {
+  width: 60vw !important;
+}
+
+/* box shadow */
+.box-shadow {
+  box-shadow: 20px 16px 16px -8px rgba(0, 0, 0, 0.08);
+}
+.exp-details .experience-title {
+  font-size: 24px;
+  color: #103559;
+  margin-bottom: 15px;
+}
+.exp-details .overview .exp-title .heading {
+  font-size: 18px;
+  color: #103559;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 120px;
+}
+.exp-details .overview .exp-title .heading-value {
+  color: #717171;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* .exp-details .box-container {
+  background: red;
+} */
+.capital-case {
+  text-transform: capitalize !important;
+}
+.exp-details .box-container {
+  margin-bottom: 15px;
+}
+.exp-details .box-container .ant-card-body {
+  width: 100% !important;
+  display: flex;
+}
+.exp-details .box-container .overview {
+  width: 70% !important;
+  display: block;
+}
+.exp-details .box-container .edit-container {
+  width: 30% !important;
+  display: flex;
+  justify-content: end;
+  align-items: start;
+}
+.exp-details .box-container .edit-container .edit-icon {
+  background: #dddddd;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.view-container {
+  display: flex;
+  justify-content: end;
+}
+
+/* break points */
+@media (max-width: 576px) {
+  .exp-details .overview .exp-title .heading {
+    width: 100%;
+  }
+}

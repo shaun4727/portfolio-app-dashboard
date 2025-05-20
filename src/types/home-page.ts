@@ -22,3 +22,13 @@ export type SkillType = {
       }
     | string;
 };
+
+export type ExperienceType = {
+  company_name: string;
+  currently_working: boolean;
+  designation: string;
+  start_date: string;
+  end_date: string;
+  responsibilities: string[];
+  _id: string;
+};

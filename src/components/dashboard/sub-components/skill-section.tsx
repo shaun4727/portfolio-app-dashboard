@@ -2,59 +2,86 @@
 
 import {
   Button,
-  Card,
   Col,
   ConfigProvider,
-  Flex,
   Form,
   FormProps,
+  Image,
   Input,
   message,
   Row,
-  Select,
-  Space,
   Upload,
   UploadProps,
 } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'sonner';
 import '../asset/home-page.css';
-import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
+import { DeleteFilled, UploadOutlined } from '@ant-design/icons';
 import { TFile } from '@/types';
-import { createSkillItemServices } from '@/services/HomeServices';
+import {
+  createSkillItemServices,
+  revalidateSkills,
+  updateSkillDataServices,
+} from '@/services/HomeServices';
 import { SkillType } from '@/types/home-page';
 
 const { TextArea } = Input;
+interface updateSkillParams {
+  currSkill: SkillType | null;
+  setCurrSkill: React.Dispatch<React.SetStateAction<SkillType | null>>;
+}
 
-export default function SkillSection() {
+export default function SkillSection({
+  currSkill,
+  setCurrSkill,
+}: updateSkillParams) {
   const [form] = Form.useForm();
   let toastId: string | number = 'hero-section';
+
+  useEffect(() => {
+    if (currSkill) {
+      form.resetFields();
+      form.setFieldsValue({
+        name: currSkill.name,
+        description: currSkill.description,
+        skill_icon: currSkill.skill_icon,
+      });
+    }
+  }, [currSkill]);
 
   const onFinish: FormProps<any>['onFinish'] = async (values) => {
     try {
       toastId = toast.loading('...Loading', { id: toastId });
 
-      const { skill_icon = [], ...rest } = values;
+      const { skill_icon = { fileList: [] }, ...rest } = values;
 
       const formData = new FormData();
 
-      skill_icon.forEach((file: TFile) => {
-        if (file.originFileObj instanceof Blob) {
-          formData.append('skill_icon', file.originFileObj);
-        }
-      });
+      if (typeof skill_icon !== 'string') {
+        skill_icon.fileList.forEach((file: TFile) => {
+          if (file.originFileObj instanceof Blob) {
+            formData.append('skill_icon', file.originFileObj);
+          }
+        });
+      }
 
       const formObj = {
         ...rest,
+        _id: currSkill?._id,
       };
 
       formData.append('data', JSON.stringify(formObj));
 
-      const res = await createSkillItemServices(formData);
-      console.log(res);
+      let res;
+      if (!currSkill) {
+        res = await createSkillItemServices(formData);
+      } else {
+        res = await updateSkillDataServices(formData);
+      }
+
       if (res?.success) {
-        // await revalidateHeroes();
-        // setCurrHero(null);
+        await revalidateSkills();
+        setCurrSkill(null);
         form.resetFields();
 
         toast.success(res?.message, { id: toastId });
@@ -66,13 +93,9 @@ export default function SkillSection() {
     }
   };
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
+  const deleteThumbnail = () => {
+    setCurrSkill({ ...currSkill, skill_icon: '' } as SkillType);
   };
-
   const thumbnailProps: UploadProps = {
     name: 'skill-icon-file',
 
@@ -160,8 +183,6 @@ export default function SkillSection() {
               <Form.Item
                 label="Skill Icon"
                 name="skill_icon"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
                 className="label-input"
                 rules={[
                   {
@@ -180,7 +201,34 @@ export default function SkillSection() {
                   </Button>
                 </Upload>
               </Form.Item>
-
+              {currSkill && (
+                <Row gutter={[16, 16]} className="edit-project-container">
+                  <Col
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={8}
+                    xl={8}
+                    className="gutter-row"
+                  >
+                    {' '}
+                    {currSkill.skill_icon && (
+                      <div className="preview-image">
+                        {currSkill && (
+                          <Image
+                            src={currSkill.skill_icon as string}
+                            alt="project-image"
+                          />
+                        )}
+                        <DeleteFilled
+                          style={{ color: 'red', cursor: 'pointer' }}
+                          onClick={() => deleteThumbnail()}
+                        />
+                      </div>
+                    )}
+                  </Col>
+                </Row>
+              )}
               <Form.Item label={null}>
                 <Button className="skill-submit-button" htmlType="submit">
                   Submit
