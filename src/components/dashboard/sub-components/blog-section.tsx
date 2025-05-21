@@ -193,10 +193,11 @@ export default function BlogSection() {
             open={open}
           >
             {!editMode && (
-              <div>
+              <div className="blog-post">
                 <h4 style={{ color: '#103559', marginBottom: '15px' }}>
                   {currBlog?.question}
                 </h4>
+
                 <div
                   style={{
                     fontSize: '18px',

@@ -108,6 +108,17 @@
   justify-content: end;
 }
 
+/* for blog section */
+.blog-post p {
+  margin-bottom: 15px;
+}
+.blog-post pre {
+  background: #000;
+  color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
 /* break points */
 @media (max-width: 576px) {
   .exp-details .overview .exp-title .heading {
